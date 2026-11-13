@@ -1,0 +1,10 @@
+.superpowers/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+.venv/
+.terraform/
+*.tfstate*
+backend.hcl
+terraform.tfvars
+build/
