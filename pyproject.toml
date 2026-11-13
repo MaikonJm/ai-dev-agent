@@ -17,6 +17,7 @@ packages = ["agent"]
 [tool.ruff]
 line-length = 120
 target-version = "py312"
+extend-exclude = ["docs"]
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "B", "I", "UP"]
