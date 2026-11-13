@@ -7,6 +7,13 @@ dependencies = ["boto3>=1.35", "httpx>=0.28", "PyJWT[crypto]>=2.9"]
 [project.optional-dependencies]
 dev = ["pytest>=8", "moto[dynamodb,sqs,ecs,ssm]>=5", "ruff>=0.8", "pyyaml>=6"]
 
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["agent"]
+
 [tool.ruff]
 line-length = 120
 target-version = "py312"
