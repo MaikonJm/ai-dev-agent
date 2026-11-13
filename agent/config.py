@@ -11,7 +11,7 @@ class Settings:
     table_name: str = "ai-dev-agent-tasks"
     queue_url: str = ""
     plan_model_id: str = "us.anthropic.claude-haiku-4-5-20251001-v1:0"
-    impl_model_id: str = "us.anthropic.claude-sonnet-4-5-20250929-v1:0"
+    impl_model_id: str = "us.anthropic.claude-sonnet-4-6"
     allowed_users: frozenset[str] = frozenset()
     trigger_label: str = "agent"
     max_iterations: int = 40
