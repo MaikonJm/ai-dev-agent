@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        stack: [foundation]
+        stack: [foundation, platform]
     defaults:
       run:
         working-directory: terraform/${{ matrix.stack }}

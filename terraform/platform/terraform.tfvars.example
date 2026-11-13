@@ -1,0 +1,5 @@
+state_bucket           = "aws-sre-ai-platform-tfstate-ACCOUNT_ID"
+image_tag              = "abc1234" # 7-char SHA pushed by the Image workflow
+github_app_id          = "123456"
+github_installation_id = "12345678"
+alarm_email            = "you@example.com"

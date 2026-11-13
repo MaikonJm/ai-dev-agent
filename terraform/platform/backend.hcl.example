@@ -1,0 +1,5 @@
+bucket       = "aws-sre-ai-platform-tfstate-ACCOUNT_ID"
+key          = "ai-dev-agent/platform.tfstate"
+region       = "us-east-1"
+encrypt      = true
+use_lockfile = true
