@@ -4,6 +4,8 @@
 
 > An autonomous development agent on AWS. Label a GitHub issue, approve the plan it proposes, and it writes the code and the tests in an isolated Fargate sandbox and opens a pull request with a report. It never merges: a human always decides.
 
+📝 **Write-up (PT-BR):** [Meu agente de IA passou em 78 testes. Falhou na primeira issue real.](https://medium.com/@maikonjm/meu-agente-de-ia-passou-em-78-testes-falhou-na-primeira-issue-real-6e09abd29dd6)
+
 ![Status](https://img.shields.io/badge/status-tested%20on%20AWS-brightgreen)
 ![Terraform](https://img.shields.io/badge/Terraform-844FBA?logo=terraform&logoColor=white)
 ![AWS](https://img.shields.io/badge/AWS-232F3E?logo=amazonwebservices&logoColor=white)
