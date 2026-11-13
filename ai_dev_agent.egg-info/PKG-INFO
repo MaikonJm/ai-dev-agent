@@ -1,0 +1,12 @@
+Metadata-Version: 2.4
+Name: ai-dev-agent
+Version: 0.1.0
+Requires-Python: >=3.12
+Requires-Dist: boto3>=1.35
+Requires-Dist: httpx>=0.28
+Requires-Dist: PyJWT[crypto]>=2.9
+Provides-Extra: dev
+Requires-Dist: pytest>=8; extra == "dev"
+Requires-Dist: moto[dynamodb,ecs,sqs,ssm]>=5; extra == "dev"
+Requires-Dist: ruff>=0.8; extra == "dev"
+Requires-Dist: pyyaml>=6; extra == "dev"
