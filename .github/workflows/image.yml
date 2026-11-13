@@ -1,0 +1,35 @@
+name: Image
+on:
+  pull_request:
+    paths: ["agent/**", "Dockerfile", "pyproject.toml"]
+  push:
+    branches: [main]
+    paths: ["agent/**", "Dockerfile", "pyproject.toml"]
+permissions:
+  contents: read
+  id-token: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build
+        run: docker build -t runner:${GITHUB_SHA::7} .
+      - name: Configure AWS (main only)
+        if: github.event_name == 'push' && vars.AWS_ACCOUNT_ID != ''
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::${{ vars.AWS_ACCOUNT_ID }}:role/ai-dev-agent-github-ci
+          aws-region: us-east-1
+      - name: Push to ECR (skip existing tag)
+        if: github.event_name == 'push' && vars.AWS_ACCOUNT_ID != ''
+        run: |
+          TAG=${GITHUB_SHA::7}
+          REPO=ai-dev-agent/runner
+          if aws ecr describe-images --repository-name "$REPO" --image-ids imageTag="$TAG" >/dev/null 2>&1; then
+            echo "tag $TAG already in ECR"; exit 0
+          fi
+          REGISTRY=${{ vars.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com
+          aws ecr get-login-password | docker login --username AWS --password-stdin "$REGISTRY"
+          docker tag runner:$TAG "$REGISTRY/$REPO:$TAG"
+          docker push "$REGISTRY/$REPO:$TAG"
