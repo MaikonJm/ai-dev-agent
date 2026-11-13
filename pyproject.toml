@@ -1,0 +1,18 @@
+[project]
+name = "ai-dev-agent"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = ["boto3>=1.35", "httpx>=0.28", "PyJWT[crypto]>=2.9"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "moto[dynamodb,sqs,ecs,ssm]>=5", "ruff>=0.8", "pyyaml>=6"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "B", "I", "UP"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
