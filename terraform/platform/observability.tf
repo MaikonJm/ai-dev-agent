@@ -38,6 +38,12 @@ resource "aws_cloudwatch_metric_alarm" "failed_tasks" {
   alarm_actions       = [aws_sns_topic.alarms.arn]
 }
 
+# Alarms cannot use SEARCH expressions, so the cost metric is read once per
+# outcome the runner emits (agent/runner.py) and the series are added up.
+locals {
+  outcomes = ["AWAITING_APPROVAL", "PR_OPENED", "FAILED", "BUDGET_EXCEEDED"]
+}
+
 resource "aws_cloudwatch_metric_alarm" "daily_cost" {
   alarm_name          = "${var.project}-daily-model-cost"
   alarm_description   = "Model spend in the last day passed the limit"
@@ -47,9 +53,26 @@ resource "aws_cloudwatch_metric_alarm" "daily_cost" {
   treat_missing_data  = "notBreaching"
   alarm_actions       = [aws_sns_topic.alarms.arn]
 
+  dynamic "metric_query" {
+    for_each = local.outcomes
+    content {
+      id          = "m${metric_query.key}"
+      return_data = false
+
+      metric {
+        namespace   = "AIDevAgent"
+        metric_name = "CostUSD"
+        dimensions  = { Outcome = metric_query.value }
+        stat        = "Sum"
+        period      = 86400
+      }
+    }
+  }
+
   metric_query {
     id          = "cost"
-    expression  = "SUM(SEARCH('{AIDevAgent,Outcome} MetricName=\"CostUSD\"', 'Sum', 86400))"
+    label       = "Model cost in the last day (USD)"
+    expression  = join(" + ", [for i in range(length(local.outcomes)) : "FILL(m${i}, 0)"])
     return_data = true
   }
 }
