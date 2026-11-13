@@ -16,7 +16,7 @@ The first deployment on AWS followed [the runbook](../runbook.md) from an empty 
 - No user impact: test session on a sandbox repository.
 - Two agent runs ended as `FAILED` before the successful one. Neither produced a pull request.
 - One `terraform apply` stopped at 35 of 36 resources.
-- Model spend stayed far below the US$0.75 per-task cap. The plan phase cost US$0.0147.
+- Model spend stayed below the US$0.75 per-task cap: US$0.0147 for the plan and US$0.2133 for the successful implementation (61,559 input and 1,905 output tokens, 43 s, 15 steps). The failed implement run is not included in these figures.
 - Everything created (52 resources in two stacks) was destroyed at the end.
 
 ## Timeline (UTC, approximate)
@@ -37,7 +37,7 @@ The first deployment on AWS followed [the runbook](../runbook.md) from an empty 
 | 17:33 | `/approve` |
 | 17:35 | Run 3 (implement) ends as `FAILED`: `ImportError` when starting pytest |
 | 17:40 | Fix merged ([#15](https://github.com/MaikonJm/ai-dev-agent/pull/15)), image `84d2607` deployed, `/revise` |
-| 17:42 | Run 4 (implement): PR #4 opened |
+| 17:42 | Run 4 (implement): PR #4 opened after 43 s and 15 steps, US$0.2133 |
 | 17:46 | PR reviewed and merged by a human |
 | 18:00 | Platform and foundation destroyed; leftovers checked |
 
